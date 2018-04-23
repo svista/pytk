@@ -40,7 +40,7 @@ class Begueradj(tkinter.Frame):
         self.modified_entry.grid(row = 1, column = 1)
 
         self.submit_button = tkinter.Button(self.parent, text = "Insert", command = self.insert_data)
-        self.submit_button.grid(row = 2, column = 1, sticky = tkinter.W)
+        self.submit_button.grid(row = 1, column = 3, sticky = tkinter.W)
         self.exit_button = tkinter.Button(self.parent, text = "Exit", command = self.parent.quit)
         self.exit_button.grid(row = 0, column = 3)
 

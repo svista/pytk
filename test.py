@@ -26,16 +26,13 @@ class UI_LabTool(tkinter.Tk):
         self.initialize()
 
     def initialize(self):
-        self.grid()
-
         self.frm_nodes = ttk.LabelFrame(self, text='Node')
-        self.frm_operate = ttk.LabelFrame(self, text='Task')
+        self.frm_task = ttk.LabelFrame(self, text='Task')
         self.frm_status = ttk.LabelFrame(self, text='Log')
 
         self.frm_nodes.grid(column=0, row=0, sticky=tkinter.NSEW)
-        self.frm_operate.grid(column=1, row=0, sticky=tkinter.NSEW)
-        self.frm_status.grid(
-            column=0, row=1, columnspan=2, sticky=tkinter.NW)
+        self.frm_task.grid(column=0, row=1, sticky=tkinter.NSEW)
+        self.frm_status.grid(column=0, row=2, sticky=tkinter.NSEW)
 
         self.lbl_ip = ttk.Label(self.frm_nodes, text="IP")
         self.enty_ip = ttk.Entry(self.frm_nodes)
@@ -57,12 +54,12 @@ class UI_LabTool(tkinter.Tk):
         self.lbl_pass.grid(row = 0, column = 3, sticky = tkinter.W)
         self.enty_pass.grid(row = 1, column = 3)
 
-        self.btn_add = ttk.Button(self.frm_nodes, text='Add node')
+        self.btn_add = ttk.Button(self.frm_nodes, text='Add node', command = self.node_insert)
         self.btn_remove = ttk.Button(self.frm_nodes, text='Remove node')
         self.btn_edit = ttk.Button(self.frm_nodes, text='Edit node')
-        self.btn_add.grid(column=0, row=2, sticky=tkinter.NSEW)
-        self.btn_edit.grid(column=1, row=2, sticky=tkinter.NSEW)
-        self.btn_remove.grid(column=3, row=2, sticky=tkinter.NSEW)
+        self.btn_add.grid(column=0, row=0, sticky=tkinter.NSEW)
+        self.btn_edit.grid(column=1, row=0, sticky=tkinter.NSEW)
+        self.btn_remove.grid(column=3, row=0, sticky=tkinter.NSEW)
 
         self.tree_node = ttk.Treeview(self.frm_nodes, columns=('IP', 'Base Folder', 'User', 'Password'))
         self.tree_node.heading('#0', text='IP')
@@ -77,10 +74,22 @@ class UI_LabTool(tkinter.Tk):
 
         self.frm_nodes.columnconfigure('all', weight=1)
 
+        self.task_stopall = ttk.Button(self.frm_task, text='Stop All Processes')
+        self.task_copy = ttk.Button(self.frm_task, text='Copy')
+        self.task_stopall.grid(column=0, row=0, sticky=tkinter.NSEW)
+        self.task_copy.grid(column=0, row=1, sticky=tkinter.NSEW)
+        self.frm_task.columnconfigure('all', weight=1)
+
+        self.log = tkinter.Text(self.frm_status)
+        self.log.grid(column=0, row=0, sticky=tkinter.NSEW)
+
         self.columnconfigure('all', weight=1)
         self.rowconfigure('all', weight=1)
         pass
 
+    def node_insert(self):
+        self.tree_node.insert('', 'end', text=self.enty_ip.get(), value=(self.enty_base.get(), self.enty_user.get(), self.enty_pass.get()))
+        pass
 
 if __name__ == '__main__':
     app = UI_LabTool(None)
